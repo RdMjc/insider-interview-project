@@ -14,13 +14,43 @@ type Fixture struct {
 	Weeks []Week
 }
 
-// func CreateFixture(teams []team.Team) (Fixture, error) {
-// 	/*
-// 		Performs round-robin tournament match algorithm (Circle Method), described in
-// 		https://en.wikipedia.org/wiki/Round-robin_tournament#Scheduling_algorithm
-// 	*/
+func CreateFixture(teams []team.Team) (Fixture, error) {
+	/*
+		Performs round-robin tournament match algorithm (Circle Method), described in
+		https://en.wikipedia.org/wiki/Round-robin_tournament#Scheduling_algorithm
+	*/
 
-// }
+	// get one way fixture
+	var oneWayFixture, _ = createOneTourFixture(teams)
+
+	// append home-away teams reversed weeks on top of oneWayFixture
+	// to get full fixture
+	for _, week := range oneWayFixture.Weeks {
+
+		// reverse home-away teams
+		var reversedWeek = reverseWeek(week)
+
+		oneWayFixture.Weeks = append(oneWayFixture.Weeks, reversedWeek)
+	}
+
+	return oneWayFixture, nil
+}
+
+func reverseWeek(week Week) Week {
+	var reversedWeek Week
+	for _, m := range week.Matches {
+		var reversedMatch = match.Match{
+			HomeTeam:  m.AwayTeam,
+			AwayTeam:  m.HomeTeam,
+			HomeGoals: 0,
+			AwayGoals: 0,
+		}
+
+		reversedWeek.Matches = append(reversedWeek.Matches, reversedMatch)
+	}
+
+	return reversedWeek
+}
 
 func createOneTourFixture(teams []team.Team) (Fixture, error) {
 	// Only creates one tour of the fixture

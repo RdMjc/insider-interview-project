@@ -18,3 +18,17 @@ func TestCreateOneTourFixture(t *testing.T) {
 	//fmt.Println(resultFixture)
 	Print(resultFixture)
 }
+
+func TestCreateFixture(t *testing.T) {
+	teamList := []team.Team{
+		{"Manchester City", 80},
+		{"Chelsea", 75},
+		{"Liverpool", 75},
+		{"Manchester United", 65},
+	}
+
+	resultFixture, _ := CreateFixture(teamList)
+
+	//fmt.Println(resultFixture)
+	Print(resultFixture)
+}
