@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestGetLeagueTable(t *testing.T) {
+func TestGetLeagueStatistics(t *testing.T) {
 	var f fixture.Fixture
 	f, _ = fixture.CreateFixture(team.GetTeams())
 
@@ -15,5 +15,5 @@ func TestGetLeagueTable(t *testing.T) {
 		activeWeek: 1,
 	}
 
-	GetLeagueTable(l)
+	GetLeagueStatistics(l)
 }

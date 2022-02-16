@@ -20,7 +20,7 @@ type TeamStatistics struct {
 	goalDifference int
 }
 
-func GetLeagueTable(l League) map[team.Team]TeamStatistics {
+func GetLeagueStatistics(l League) map[team.Team]TeamStatistics {
 	var leagueTable = make(map[team.Team]TeamStatistics)
 
 	var defaultStatistics = TeamStatistics{
@@ -85,5 +85,5 @@ func GetLeagueTable(l League) map[team.Team]TeamStatistics {
 	}
 	fmt.Println(leagueTable)
 
-	return nil
+	return leagueTable
 }
