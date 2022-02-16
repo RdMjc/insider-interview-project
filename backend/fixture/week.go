@@ -25,6 +25,23 @@ func reverseWeek(week Week) Week {
 	return reversedWeek
 }
 
+func PlayMatches(week Week) Week {
+	/*
+		Play all the matches in the given week
+	*/
+
+	// go through all the matches
+	for i, m := range week.Matches {
+		// play the match
+		m = match.Play(m)
+
+		// replace played match in original place
+		week.Matches[i] = m
+	}
+
+	return week
+}
+
 func printWeek(week Week) {
 	for _, weekMatch := range week.Matches {
 		fmt.Printf("%v %d:%d %v\n",
