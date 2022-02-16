@@ -87,3 +87,39 @@ func GetLeagueStatistics(l League) map[team.Team]TeamStatistics {
 
 	return leagueTable
 }
+
+func PlayOneWeek(l League) League {
+	/*
+		Play the given league one week and return the updated league
+	*/
+
+	// check if league is over
+	if l.activeWeek > len(l.fix.Weeks)-1 {
+		// league is over
+		// return unchanged
+		return l
+	} else {
+		// play the active week
+		fmt.Println("LEAGUE PLAYED")
+		l.fix.Weeks[l.activeWeek] = fixture.PlayMatches(l.fix.Weeks[l.activeWeek])
+		l.activeWeek += 1
+	}
+
+	return l
+}
+
+func PlayLeague(l League) League {
+	/*
+		Play the whole league starting from active week
+		Return the updated league
+	*/
+
+	// play while league is not over
+	for l.activeWeek <= len(l.fix.Weeks)-1 {
+
+		// play the league one week
+		l = PlayOneWeek(l)
+	}
+
+	return l
+}
