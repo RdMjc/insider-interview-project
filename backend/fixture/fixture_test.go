@@ -1,7 +1,6 @@
 package fixture
 
 import (
-	"fmt"
 	"interview/backend/team"
 	"testing"
 )
@@ -16,5 +15,6 @@ func TestCreateOneTourFixture(t *testing.T) {
 
 	resultFixture, _ := createOneTourFixture(teamList)
 
-	fmt.Println(resultFixture)
+	//fmt.Println(resultFixture)
+	Print(resultFixture)
 }

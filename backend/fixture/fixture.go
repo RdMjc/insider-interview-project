@@ -103,3 +103,22 @@ func min(x int, y int) int {
 	}
 	return y
 }
+
+func Print(fix Fixture) {
+
+	// go through over weeks
+	for i, week := range fix.Weeks {
+		fmt.Printf("----------- Week %d ----------- \n", i)
+		printWeek(week)
+	}
+}
+
+func printWeek(week Week) {
+	for _, weekMatch := range week.Matches {
+		fmt.Printf("%v %d:%d %v\n",
+			weekMatch.HomeTeam.Name,
+			weekMatch.HomeGoals,
+			weekMatch.AwayGoals,
+			weekMatch.AwayTeam.Name)
+	}
+}
