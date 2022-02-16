@@ -6,10 +6,6 @@ import (
 	"interview/backend/team"
 )
 
-type Week struct {
-	Matches []match.Match
-}
-
 type Fixture struct {
 	Weeks []Week
 }
@@ -34,22 +30,6 @@ func CreateFixture(teams []team.Team) (Fixture, error) {
 	}
 
 	return oneWayFixture, nil
-}
-
-func reverseWeek(week Week) Week {
-	var reversedWeek Week
-	for _, m := range week.Matches {
-		var reversedMatch = match.Match{
-			HomeTeam:  m.AwayTeam,
-			AwayTeam:  m.HomeTeam,
-			HomeGoals: 0,
-			AwayGoals: 0,
-		}
-
-		reversedWeek.Matches = append(reversedWeek.Matches, reversedMatch)
-	}
-
-	return reversedWeek
 }
 
 func createOneTourFixture(teams []team.Team) (Fixture, error) {
@@ -140,15 +120,5 @@ func Print(fix Fixture) {
 	for i, week := range fix.Weeks {
 		fmt.Printf("----------- Week %d ----------- \n", i)
 		printWeek(week)
-	}
-}
-
-func printWeek(week Week) {
-	for _, weekMatch := range week.Matches {
-		fmt.Printf("%v %d:%d %v\n",
-			weekMatch.HomeTeam.Name,
-			weekMatch.HomeGoals,
-			weekMatch.AwayGoals,
-			weekMatch.AwayTeam.Name)
 	}
 }
