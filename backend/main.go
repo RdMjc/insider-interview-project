@@ -17,14 +17,11 @@ var l = league.League{
 	ActiveWeek: 0,
 }
 
-func init() {
-	l = league.PlayOneWeek(l)
-}
-
 func main() {
 
 	router := gin.Default()
 	router.GET("/league-table", getLeagueTable)
+	router.DELETE("/league-table", resetLeague)
 	router.GET("/matches", getMatches)
 	router.POST("/matches", playMatches)
 
@@ -68,8 +65,19 @@ func getLeagueTable(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, jsonSerializableResponse)
 }
 
+func resetLeague(c *gin.Context) {
+	// Reset league by setting active week to 0
+	l.ActiveWeek = 0
+
+	c.IndentedJSON(http.StatusOK, "")
+}
+
 func getMatches(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, l.Fix.Weeks[l.ActiveWeek])
+	if l.ActiveWeek == 0 {
+		c.IndentedJSON(http.StatusOK, l.Fix.Weeks[0])
+	} else {
+		c.IndentedJSON(http.StatusOK, l.Fix.Weeks[l.ActiveWeek-1])
+	}
 }
 
 func playMatches(c *gin.Context) {
