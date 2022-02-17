@@ -51,3 +51,11 @@ func printWeek(week Week) {
 			weekMatch.AwayTeam.Name)
 	}
 }
+
+func ResetWeek(w Week) Week {
+	// reset week by resetting all matches in it
+	for i, m := range w.Matches {
+		w.Matches[i] = match.Reset(m)
+	}
+	return w
+}

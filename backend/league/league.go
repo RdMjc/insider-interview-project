@@ -194,3 +194,17 @@ func PrintLeagueTable(l League) {
 	}
 
 }
+
+func Reset(l League) League {
+	// Reset league
+
+	// set active week to 0
+	l.ActiveWeek = 0
+
+	// reset matches in all weeks
+	for i, w := range l.Fix.Weeks {
+		l.Fix.Weeks[i] = fixture.ResetWeek(w)
+	}
+
+	return l
+}

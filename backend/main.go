@@ -67,7 +67,7 @@ func getLeagueTable(c *gin.Context) {
 
 func resetLeague(c *gin.Context) {
 	// Reset league by setting active week to 0
-	l.ActiveWeek = 0
+	l = league.Reset(l)
 
 	c.IndentedJSON(http.StatusOK, "")
 }
