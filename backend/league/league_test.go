@@ -59,7 +59,7 @@ func TestPlayLeague(t *testing.T) {
 	fmt.Println("LEAGUE STARTING")
 	fmt.Println(leagueStats)
 
-	// play the league one week
+	// play the league
 	l = PlayLeague(l)
 
 	// get league stats
@@ -67,4 +67,26 @@ func TestPlayLeague(t *testing.T) {
 
 	fmt.Println("LEAGUE IS OVER")
 	fmt.Println(leagueStats)
+}
+
+func TestGetLeagueTable(t *testing.T) {
+	var f fixture.Fixture
+	f, _ = fixture.CreateFixture(team.GetTeams())
+
+	var l = League{
+		fix:        f,
+		activeWeek: 0,
+	}
+	// play the league
+	l = PlayLeague(l)
+
+	// get league stats
+	// leagueStats := GetLeagueStatistics(l)
+
+	// teamsSorted, teamsStats := GetLeagueTable(l)
+	PrintLeagueTable(l)
+
+	// fmt.Println("########################")
+	// fmt.Println(teamsSorted)
+	// fmt.Println(teamsStats)
 }
