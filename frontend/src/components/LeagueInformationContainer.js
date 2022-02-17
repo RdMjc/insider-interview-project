@@ -11,12 +11,22 @@ import axios from 'axios';
 function LeagueInformationContainer(props) {
 	const [s, setS] = useState(0);
 
+	const playAllWeeks = () => {
+		axios.post("http://localhost:8080/league-table").then(
+			res => {
+				console.log(res.status);
+				console.log(res.data);
+				
+				setS(s+1);
+			}
+		)
+	};
+
 	const playNextWeek = () => {
 		axios.post("http://localhost:8080/matches").then(
 			res => {
 				console.log(res.status);
 				console.log(res.data);
-				// leagueComponentRef.current.update();
 
 				setS(s+1);
 			}
@@ -34,7 +44,6 @@ function LeagueInformationContainer(props) {
 		)
 	};
 
-
 	return (
 		<div>
 			<Row>
@@ -50,7 +59,7 @@ function LeagueInformationContainer(props) {
 			</Row>
 			<Row>
 				<Col>
-					<Button variant="primary">Play All Weeks</Button>
+					<Button variant="primary" onClick={playAllWeeks}>Play All Weeks</Button>
 				</Col>
 				<Col>
 					<Button variant="info" onClick={playNextWeek}>Play Next Week</Button>
