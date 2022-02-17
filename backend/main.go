@@ -7,6 +7,7 @@ import (
 	"interview/backend/team"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,8 +21,11 @@ var l = league.League{
 func main() {
 
 	router := gin.Default()
+	router.Use(cors.Default())
 	router.GET("/league-table", getLeagueTable)
 	router.DELETE("/league-table", resetLeague)
+	router.POST("/league-table", playAllLeague)
+
 	router.GET("/matches", getMatches)
 	router.POST("/matches", playMatches)
 
@@ -32,6 +36,12 @@ func main() {
 // 	name string
 // 	stats league.TeamStatistics
 // }
+
+func playAllLeague(c *gin.Context) {
+	l = league.PlayLeague(l)
+
+	c.IndentedJSON(http.StatusOK, "")
+}
 
 func getLeagueTable(c *gin.Context) {
 	// obtain a JSON serializable league table
