@@ -7,29 +7,34 @@ import (
 )
 
 type League struct {
-	fix        fixture.Fixture
-	activeWeek int
+	Fix        fixture.Fixture `json:"fixture"`
+	ActiveWeek int             `json:"activeWeek"`
 }
 
 type TeamStatistics struct {
-	games          int
-	points         int
-	win            int
-	draw           int
-	loss           int
-	goalDifference int
+	Games          int `json:"games"`
+	Points         int `json:"points"`
+	Win            int `json:"wins"`
+	Draw           int `json:"draws"`
+	Loss           int `json:"losses"`
+	GoalDifference int `json:"goalDifference"`
+}
+
+type LeagueTable struct {
+	TeamList  []team.Team                  `json:"teamList"`
+	TeamStats map[team.Team]TeamStatistics `json:"teamStats"`
 }
 
 func GetLeagueStatistics(l League) map[team.Team]TeamStatistics {
 	var leagueTable = make(map[team.Team]TeamStatistics)
 
 	var defaultStatistics = TeamStatistics{
-		games:          0,
-		points:         0,
-		win:            0,
-		draw:           0,
-		loss:           0,
-		goalDifference: 0,
+		Games:          0,
+		Points:         0,
+		Win:            0,
+		Draw:           0,
+		Loss:           0,
+		GoalDifference: 0,
 	}
 
 	fmt.Println(leagueTable)
@@ -40,25 +45,25 @@ func GetLeagueStatistics(l League) map[team.Team]TeamStatistics {
 
 	// go through all weeks played in the fixture
 	// make team statistics
-	for i := 0; i < l.activeWeek; i++ {
+	for i := 0; i < l.ActiveWeek; i++ {
 		// go through matches in that week
-		for _, m := range l.fix.Weeks[i].Matches {
+		for _, m := range l.Fix.Weeks[i].Matches {
 
 			// Home Team
 			if entry, ok := leagueTable[m.HomeTeam]; ok {
 				// games statistic
-				entry.games += 1
+				entry.Games += 1
 				// win - draw - loss statistic
 				if m.HomeGoals > m.AwayGoals {
-					entry.win += 1
-					entry.points += 3
+					entry.Win += 1
+					entry.Points += 3
 				} else if m.HomeGoals == m.AwayGoals {
-					entry.draw += 1
-					entry.points += 1
+					entry.Draw += 1
+					entry.Points += 1
 				} else {
-					entry.loss += 1
+					entry.Loss += 1
 				}
-				entry.goalDifference += m.HomeGoals - m.AwayGoals
+				entry.GoalDifference += m.HomeGoals - m.AwayGoals
 
 				leagueTable[m.HomeTeam] = entry
 			}
@@ -66,18 +71,18 @@ func GetLeagueStatistics(l League) map[team.Team]TeamStatistics {
 			// Away team
 			if entry, ok := leagueTable[m.AwayTeam]; ok {
 				// games statistic
-				entry.games += 1
+				entry.Games += 1
 				// win - draw - loss statistic
 				if m.HomeGoals > m.AwayGoals {
-					entry.loss += 1
+					entry.Loss += 1
 				} else if m.HomeGoals == m.AwayGoals {
-					entry.draw += 1
-					entry.points += 1
+					entry.Draw += 1
+					entry.Points += 1
 				} else {
-					entry.win += 1
-					entry.points += 3
+					entry.Win += 1
+					entry.Points += 3
 				}
-				entry.goalDifference += m.AwayGoals - m.HomeGoals
+				entry.GoalDifference += m.AwayGoals - m.HomeGoals
 
 				leagueTable[m.AwayTeam] = entry
 			}
@@ -94,15 +99,15 @@ func PlayOneWeek(l League) League {
 	*/
 
 	// check if league is over
-	if l.activeWeek > len(l.fix.Weeks)-1 {
+	if l.ActiveWeek > len(l.Fix.Weeks)-1 {
 		// league is over
 		// return unchanged
 		return l
 	} else {
 		// play the active week
 		fmt.Println("LEAGUE PLAYED")
-		l.fix.Weeks[l.activeWeek] = fixture.PlayMatches(l.fix.Weeks[l.activeWeek])
-		l.activeWeek += 1
+		l.Fix.Weeks[l.ActiveWeek] = fixture.PlayMatches(l.Fix.Weeks[l.ActiveWeek])
+		l.ActiveWeek += 1
 	}
 
 	return l
@@ -115,7 +120,7 @@ func PlayLeague(l League) League {
 	*/
 
 	// play while league is not over
-	for l.activeWeek <= len(l.fix.Weeks)-1 {
+	for l.ActiveWeek <= len(l.Fix.Weeks)-1 {
 
 		// play the league one week
 		l = PlayOneWeek(l)
@@ -124,7 +129,8 @@ func PlayLeague(l League) League {
 	return l
 }
 
-func GetLeagueTable(l League) ([]team.Team, map[team.Team]TeamStatistics) {
+// func GetLeagueTable(l League) ([]team.Team, map[team.Team]TeamStatistics) {
+func GetLeagueTable(l League) LeagueTable {
 	/*
 		Returns the league table
 		- First returned value is the list of teams starting from 1st position in the league
@@ -141,7 +147,7 @@ func GetLeagueTable(l League) ([]team.Team, map[team.Team]TeamStatistics) {
 		isDone = true
 		for i := 0; i < len(teamList)-1; i++ {
 			// compare points of i'th and i+1'th teams points
-			if teamStats[teamList[i]].goalDifference < teamStats[teamList[i+1]].goalDifference {
+			if teamStats[teamList[i]].GoalDifference < teamStats[teamList[i+1]].GoalDifference {
 				// swap teams in their position
 				teamList[i], teamList[i+1] = teamList[i+1], teamList[i]
 				isDone = false
@@ -156,7 +162,7 @@ func GetLeagueTable(l League) ([]team.Team, map[team.Team]TeamStatistics) {
 		isDone = true
 		for i := 0; i < len(teamList)-1; i++ {
 			// compare points of i'th and i+1'th teams points
-			if teamStats[teamList[i]].points < teamStats[teamList[i+1]].points {
+			if teamStats[teamList[i]].Points < teamStats[teamList[i+1]].Points {
 				// swap teams in their position
 				teamList[i], teamList[i+1] = teamList[i+1], teamList[i]
 				isDone = false
@@ -164,23 +170,26 @@ func GetLeagueTable(l League) ([]team.Team, map[team.Team]TeamStatistics) {
 		}
 	}
 
-	return teamList, teamStats
+	return LeagueTable{teamList, teamStats}
 }
 
 func PrintLeagueTable(l League) {
 	// get league table
-	teamsSorted, teamsStats := GetLeagueTable(l)
+	// teamsSorted, teamsStats := GetLeagueTable(l)
+	leagueTable := GetLeagueTable(l)
+	teamsSorted := leagueTable.TeamList
+	teamsStats := leagueTable.TeamStats
 
 	fmt.Printf("%15v \t PTS \t P \t W \t D \t L \t GD \n", "Teams")
 	for _, te := range teamsSorted {
 		fmt.Printf("%15v \t %d \t %d \t %d \t %d \t %d \t %d \n",
 			te.Name,
-			teamsStats[te].points,
-			teamsStats[te].games,
-			teamsStats[te].win,
-			teamsStats[te].draw,
-			teamsStats[te].loss,
-			teamsStats[te].goalDifference,
+			teamsStats[te].Points,
+			teamsStats[te].Games,
+			teamsStats[te].Win,
+			teamsStats[te].Draw,
+			teamsStats[te].Loss,
+			teamsStats[te].GoalDifference,
 		)
 	}
 

@@ -6,7 +6,7 @@ import (
 )
 
 type Week struct {
-	Matches []match.Match
+	Matches []match.Match `json:"matches"`
 }
 
 func reverseWeek(week Week) Week {

@@ -8,10 +8,10 @@ import (
 )
 
 type Match struct {
-	HomeTeam  team.Team
-	AwayTeam  team.Team
-	HomeGoals int
-	AwayGoals int
+	HomeTeam  team.Team `json:"homeTeam"`
+	AwayTeam  team.Team `json:"AwayTeam"`
+	HomeGoals int       `json:"homeGoals"`
+	AwayGoals int       `json:"awayGoals"`
 }
 
 func Print(match Match) {

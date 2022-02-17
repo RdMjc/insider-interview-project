@@ -12,8 +12,8 @@ func TestGetLeagueStatistics(t *testing.T) {
 	f, _ = fixture.CreateFixture(team.GetTeams())
 
 	var l = League{
-		fix:        f,
-		activeWeek: 1,
+		Fix:        f,
+		ActiveWeek: 1,
 	}
 
 	GetLeagueStatistics(l)
@@ -24,8 +24,8 @@ func TestPlayOneWeek(t *testing.T) {
 	f, _ = fixture.CreateFixture(team.GetTeams())
 
 	var l = League{
-		fix:        f,
-		activeWeek: 1,
+		Fix:        f,
+		ActiveWeek: 1,
 	}
 
 	// get league stats
@@ -49,8 +49,8 @@ func TestPlayLeague(t *testing.T) {
 	f, _ = fixture.CreateFixture(team.GetTeams())
 
 	var l = League{
-		fix:        f,
-		activeWeek: 0,
+		Fix:        f,
+		ActiveWeek: 0,
 	}
 
 	// get league stats
@@ -74,8 +74,8 @@ func TestGetLeagueTable(t *testing.T) {
 	f, _ = fixture.CreateFixture(team.GetTeams())
 
 	var l = League{
-		fix:        f,
-		activeWeek: 0,
+		Fix:        f,
+		ActiveWeek: 0,
 	}
 	// play the league
 	l = PlayLeague(l)

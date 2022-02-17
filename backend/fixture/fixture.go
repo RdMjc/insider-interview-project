@@ -7,7 +7,7 @@ import (
 )
 
 type Fixture struct {
-	Weeks []Week
+	Weeks []Week `json:"weeks"`
 }
 
 func CreateFixture(teams []team.Team) (Fixture, error) {
