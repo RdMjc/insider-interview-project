@@ -1,18 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
 
 function LeagueTable(props) {
+	const [teams, setTeams] = useState([]);
 
 	const getLeagueTable = () => {
-
+		axios.get("http://localhost:8080/league-table").then(
+			res => {
+				setTeams(res.data["teams"]);
+			}
+		)
 	};
 
 	// takes place everytime this component is rendered
 	useEffect(() => {
 		getLeagueTable()
 	}, []);
-	
+
 	return (
 		<Table responsive="sm">
 			<thead>
@@ -27,15 +32,24 @@ function LeagueTable(props) {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>Table cell</td>
-					<td>Table cell</td>
-					<td>Table cell</td>
-					<td>Table cell</td>
-					<td>Table cell</td>
-					<td>Table cell</td>
-				</tr>
+				{
+					teams.map((team, index) => {
+						// console.log(team);
+						// console.log(Object.keys(team));
+						return (
+							<tr>
+								<td>{Object.keys(team)}</td>
+								<td>{team[Object.keys(team)[0]]["points"]}</td>
+								<td>{team[Object.keys(team)[0]]["games"]}</td>
+								<td>{team[Object.keys(team)[0]]["wins"]}</td>
+								<td>{team[Object.keys(team)[0]]["draws"]}</td>
+								<td>{team[Object.keys(team)[0]]["losses"]}</td>
+								<td>{team[Object.keys(team)[0]]["goalDifference"]}</td>
+							</tr>
+						);
+					})
+				}
+
 			</tbody>
 		</Table>
 	);
