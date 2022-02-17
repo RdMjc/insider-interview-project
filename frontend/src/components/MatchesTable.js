@@ -16,7 +16,7 @@ function MatchesTable(props) {
 	// takes place everytime this component is rendered
 	useEffect(() => {
 		getMatches()
-	}, []);
+	}, [props.refresh]);
 
 	return (
 
@@ -58,36 +58,6 @@ function MatchesTable(props) {
 				}
 			</tbody>
 		</Table>
-
-		// <div>
-		// 	{
-		// 		console.log(matches.length)
-		// 	}
-		// 	{
-		// 		matches.map((match, index) => {
-		// 			if (match.isPlayed) {
-		// 				return (
-		// 					<span>
-		// 						{match.homeTeam.name}
-		// 						{match.homeGoals}:
-		// 						{match.awayGoals}
-		// 						{match.awayTeam.name}
-		// 					</span>
-		// 				)
-		// 			} else {
-		// 				// console.log(match.homeTeam.name)
-		// 				// console.log(match)
-		// 				return (
-		// 					<div>
-		// 						{match.homeTeam.name} vs
-		// 						{match.awayTeam.name}
-		// 					</div>
-		// 				);
-		// 			}
-		// 		}
-		// 		)
-		// 	}
-		// </div>
 	);
 }
 

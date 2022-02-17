@@ -2,14 +2,8 @@ import React, { useEffect, forwardRef, useRef, useImperativeHandle, useState } f
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
 
-const LeagueTable = forwardRef((props, ref) => {
+const LeagueTable = (props) => {
 	const [teams, setTeams] = useState([]);
-
-	useImperativeHandle(ref, () => ({
-    update() {
-      getLeagueTable();
-    }
-  }));
 
 	const getLeagueTable = () => {
 		console.log("calledddddd")
@@ -23,7 +17,7 @@ const LeagueTable = forwardRef((props, ref) => {
 	// takes place everytime this component is rendered
 	useEffect(() => {
 		getLeagueTable()
-	}, []);
+	}, [props.refresh]);
 
 	return (
 		<Table responsive="sm">
@@ -61,7 +55,7 @@ const LeagueTable = forwardRef((props, ref) => {
 		</Table>
 	);
 
-})
+}
 
 // function LeagueTable(props) {
 

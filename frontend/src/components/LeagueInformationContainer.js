@@ -9,15 +9,16 @@ import axios from 'axios';
 
 
 function LeagueInformationContainer(props) {
-	const leagueComponentRef = useRef();
-	const matchesTableRef = useRef();
+	const [s, setS] = useState(0);
 
 	const playNextWeek = () => {
 		axios.post("http://localhost:8080/matches").then(
 			res => {
 				console.log(res.status);
 				console.log(res.data);
-				leagueComponentRef.current.update();
+				// leagueComponentRef.current.update();
+
+				setS(s+1);
 			}
 		)
 	};
@@ -27,6 +28,8 @@ function LeagueInformationContainer(props) {
 			res => {
 				console.log(res.status);
 				console.log(res.data);
+
+				setS(s+1);
 			}
 		)
 	};
@@ -36,10 +39,10 @@ function LeagueInformationContainer(props) {
 		<div>
 			<Row>
 				<Col>
-					<LeagueTable ref={leagueComponentRef} />
+					<LeagueTable refresh={s} />
 				</Col>
 				<Col>
-					<MatchesTable ref={matchesTableRef} />
+					<MatchesTable refresh={s} />
 				</Col>
 				<Col>
 					<ChampionshipPrediction />
