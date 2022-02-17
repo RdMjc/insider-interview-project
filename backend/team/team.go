@@ -5,8 +5,8 @@ import (
 )
 
 type Team struct {
-	Name  string
-	Power int
+	Name  string `json:"name"`
+	Power int    `json:"power"`
 }
 
 func GetTeams() []Team {

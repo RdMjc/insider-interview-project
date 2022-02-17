@@ -8,10 +8,11 @@ import (
 )
 
 type Match struct {
-	HomeTeam  team.Team
-	AwayTeam  team.Team
-	HomeGoals int
-	AwayGoals int
+	HomeTeam  team.Team `json:"homeTeam"`
+	AwayTeam  team.Team `json:"AwayTeam"`
+	HomeGoals int       `json:"homeGoals"`
+	AwayGoals int       `json:"awayGoals"`
+	IsPlayed  bool      `json:"isPlayed"`
 }
 
 func Print(match Match) {
@@ -54,6 +55,16 @@ func Play(m Match) Match {
 	// assign scores to match
 	m.HomeGoals = homeScore
 	m.AwayGoals = awayScore
+
+	// mark as played
+	m.IsPlayed = true
+
+	return m
+}
+
+func Reset(m Match) Match {
+	// reset match by setting IsPlayed attribute to false
+	m.IsPlayed = false
 
 	return m
 }
