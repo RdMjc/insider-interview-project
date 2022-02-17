@@ -7,6 +7,7 @@ import (
 	"interview/backend/team"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +21,7 @@ var l = league.League{
 func main() {
 
 	router := gin.Default()
+	router.Use(cors.Default())
 	router.GET("/league-table", getLeagueTable)
 	router.DELETE("/league-table", resetLeague)
 	router.GET("/matches", getMatches)
