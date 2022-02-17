@@ -10,11 +10,18 @@ type Team struct {
 }
 
 func GetTeams() []Team {
+	// TeamList := []Team{
+	// 	{"ManchesterCity", 80},
+	// 	{"Chelsea", 75},
+	// 	{"Liverpool", 70},
+	// 	{"Manchester United", 65},
+	// }
+
 	TeamList := []Team{
-		{"ManchesterCity", 80},
-		{"Chelsea", 75},
-		{"Liverpool", 70},
-		{"Manchester United", 65},
+		{"Manchester City", 80},
+		{"Salzburg", 35},
+		{"Lyon", 50},
+		{"FC Barcelona", 70},
 	}
 
 	return TeamList
