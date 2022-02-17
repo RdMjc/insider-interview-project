@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
 
-function LeagueTable(props) {
+const LeagueTable = forwardRef((props, ref) => {
 	const [teams, setTeams] = useState([]);
 
+	useImperativeHandle(ref, () => ({
+    update() {
+      getLeagueTable();
+    }
+  }));
+
 	const getLeagueTable = () => {
+		console.log("calledddddd")
 		axios.get("http://localhost:8080/league-table").then(
 			res => {
 				setTeams(res.data["teams"]);
@@ -53,6 +60,15 @@ function LeagueTable(props) {
 			</tbody>
 		</Table>
 	);
-}
+
+})
+
+// function LeagueTable(props) {
+
+// }
+
+// function LeagueTable(props) {
+
+// }
 
 export default LeagueTable;
