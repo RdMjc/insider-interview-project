@@ -9,7 +9,7 @@ import (
 
 type Match struct {
 	HomeTeam  team.Team `json:"homeTeam"`
-	AwayTeam  team.Team `json:"AwayTeam"`
+	AwayTeam  team.Team `json:"awayTeam"`
 	HomeGoals int       `json:"homeGoals"`
 	AwayGoals int       `json:"awayGoals"`
 	IsPlayed  bool      `json:"isPlayed"`
