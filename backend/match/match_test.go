@@ -100,3 +100,29 @@ func TestPlaySimilarTeamsDontMakeHugeDifferencesInWinsOrLosses(t *testing.T) {
 
 	fmt.Println(m)
 }
+
+func TestPlayChangesIsPlayedAttribute(t *testing.T) {
+	team1 := team.Team{
+		Name:  "team1",
+		Power: 50,
+	}
+
+	team2 := team.Team{
+		Name:  "team2",
+		Power: 50,
+	}
+
+	m := Match{
+		HomeTeam:  team1,
+		AwayTeam:  team2,
+		HomeGoals: 0,
+		AwayGoals: 0,
+		IsPlayed:  false,
+	}
+
+	m = Play(m)
+
+	if m.IsPlayed != true {
+		t.Fatal("IsPlayed attribute is not true")
+	}
+}
